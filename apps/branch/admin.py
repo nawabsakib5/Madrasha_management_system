@@ -1,3 +1,23 @@
 from django.contrib import admin
+from .models import Branch, Department, Group
 
-# Register your models here.
+
+@admin.register(Branch)
+class BranchAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code', 'phone', 'email', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('name', 'code')
+
+
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code', 'branch', 'is_active')
+    list_filter = ('is_active', 'branch')
+    search_fields = ('name', 'code')
+
+
+@admin.register(Group)
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code', 'branch', 'department', 'capacity', 'is_active')
+    list_filter = ('is_active', 'branch')
+    search_fields = ('name', 'code')
