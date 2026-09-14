@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Audit Log{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Audit Log</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Action</th>
+                <th>Model</th>
+                <th>Object</th>
+                <th>IP Address</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.user|default:"Anonymous" }}</td>
+                <td>{{ log.action }}</td>
+                <td>{{ log.model_name }}</td>
+                <td>{{ log.object_repr }}</td>
+                <td>{{ log.ip_address }}</td>
+                <td>{{ log.timestamp }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">কোনো log নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
