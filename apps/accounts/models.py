@@ -4,9 +4,10 @@ from django.db import models
 
 # ─── Role Choices ─────────────────────────────────────────
 ROLE_CHOICES = [
+    ('platform_superuser', 'Platform Superuser'),  # ← নতুন
     ('super_admin', 'Super Admin'),
     ('admin', 'Admin'),
-    ('accountant', 'Accountant'),
+    ('accountant', 'Accountant'),                  # ← নতুন
     ('teacher', 'Teacher'),
     ('student', 'Student'),
     ('parent', 'Parent'),

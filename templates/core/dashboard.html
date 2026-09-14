@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Dashboard</h1>
+    <p>Welcome, {{ user.full_name|default:user.username }}! Role: {{ user.get_role_display }}</p>
+</div>
+
+{% if user.role in 'platform_superuser,super_admin,admin' %}
+<div>
+    <h2>Statistics</h2>
+    <ul>
+        <li>Total Students: {{ total_students|default:0 }}</li>
+        <li>Total Staff: {{ total_staff|default:0 }}</li>
+        <li>Today Attendance: {{ today_attendance|default:0 }}</li>
+    </ul>
+
+    <h2>Recent Payments</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Receipt No</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in recent_payments %}
+            <tr>
+                <td>{{ payment.receipt_no }}</td>
+                <td>{{ payment.amount_paid }}</td>
+                <td>{{ payment.method }}</td>
+                <td>{{ payment.paid_at }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">কোনো payment নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% elif user.role == 'teacher' %}
+<div>
+    <h2>Today Attendance: {{ today_attendance|default:0 }}</h2>
+</div>
+
+{% elif user.role == 'student' %}
+<div>
+    <h2>My Info</h2>
+    {% if student %}
+    <p>Student ID: {{ student.student_id }}</p>
+    <p>Pending Fees: {{ pending_fees }}</p>
+    {% endif %}
+</div>
+
+{% elif user.role == 'parent' %}
+<div>
+    <h2>My Children</h2>
+    <ul>
+        {% for child in children %}
+        <li>{{ child.full_name }} - {{ child.student_id }}</li>
+        {% empty %}
+        <li>কোনো তথ্য নেই</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% endblock %}
