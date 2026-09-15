@@ -45,7 +45,7 @@
             <label>Blood Group</label>
             <select name="blood_group">
                 <option value="">-- Select --</option>
-                {% for value, label in student.BLOOD_GROUP_CHOICES %}
+                {% for value, label in blood_group_choices %}
                 <option value="{{ value }}" {% if student.blood_group == value %}selected{% endif %}>{{ label }}</option>
                 {% endfor %}
             </select>

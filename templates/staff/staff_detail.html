@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ staff.full_name }}{% endblock %}
+
+{% block content %}
+<div>
+    <h1>{{ staff.full_name }}</h1>
+    <a href="{% url 'staff:staff_list' %}">Back to List</a>
+    <a href="{% url 'staff:staff_edit' staff.pk %}">Edit</a>
+    <a href="{% url 'staff:staff_delete' staff.pk %}">Delete</a>
+
+    <h2>Basic Info</h2>
+    <table border="1">
+        <tr>
+            <th>Staff ID</th>
+            <td>{{ staff.staff_id }}</td>
+        </tr>
+        <tr>
+            <th>Full Name</th>
+            <td>{{ staff.full_name }}</td>
+        </tr>
+        <tr>
+            <th>Staff Type</th>
+            <td>{{ staff.get_staff_type_display }}</td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td>{{ staff.get_gender_display }}</td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td>{{ staff.date_of_birth }}</td>
+        </tr>
+        <tr>
+            <th>Blood Group</th>
+            <td>{{ staff.blood_group }}</td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td>{{ staff.phone }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ staff.email }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ staff.address }}</td>
+        </tr>
+        <tr>
+            <th>Designation</th>
+            <td>{{ staff.designation }}</td>
+        </tr>
+        <tr>
+            <th>Joining Date</th>
+            <td>{{ staff.joining_date }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{% if staff.is_active %}Active{% else %}Inactive{% endif %}</td>
+        </tr>
+    </table>
+
+    {% if staff.photo %}
+    <h2>Photo</h2>
+    <img src="{{ staff.photo.url }}" width="150">
+    {% endif %}
+</div>
+{% endblock %}
