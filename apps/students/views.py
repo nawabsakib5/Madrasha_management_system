@@ -37,6 +37,7 @@ def student_add(request):
                 full_name=request.POST.get('full_name'),
                 gender=request.POST.get('gender'),
                 date_of_birth=request.POST.get('date_of_birth'),
+                blood_group=request.POST.get('blood_group', ''),
                 phone=request.POST.get('phone', ''),
                 email=request.POST.get('email', ''),
                 address=request.POST.get('address', ''),
@@ -51,7 +52,11 @@ def student_add(request):
         except Exception as e:
             messages.error(request, f'Error: {str(e)}')
 
-    return render(request, 'students/student_form.html', {'action': 'Add'})
+    blood_group_choices = Student.BLOOD_GROUP_CHOICES
+    return render(request, 'students/student_form.html', {
+        'action': 'Add',
+        'blood_group_choices': blood_group_choices,
+    })
 
 
 @role_required('platform_superuser', 'super_admin', 'admin')
@@ -75,7 +80,11 @@ def student_edit(request, pk):
         except Exception as e:
             messages.error(request, f'Error: {str(e)}')
 
-    return render(request, 'students/student_form.html', {'action': 'Edit', 'student': student})
+    return render(request, 'students/student_form.html', {
+    'action': 'Edit',
+    'student': student,
+    'blood_group_choices': Student.BLOOD_GROUP_CHOICES,
+    })
 
 
 @role_required('platform_superuser', 'super_admin', 'admin')
