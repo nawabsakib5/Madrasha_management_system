@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Student List</h1>
+    <a href="{% url 'students:student_add' %}">Add New Student</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Roll No</th>
+                <th>Phone</th>
+                <th>Admission Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.student_id }}</td>
+                <td>{{ student.full_name }}</td>
+                <td>{{ student.get_gender_display }}</td>
+                <td>{{ student.roll_no }}</td>
+                <td>{{ student.phone }}</td>
+                <td>{{ student.admission_date }}</td>
+                <td>
+                    <a href="{% url 'students:student_detail' student.pk %}">View</a>
+                    <a href="{% url 'students:student_edit' student.pk %}">Edit</a>
+                    <a href="{% url 'students:student_delete' student.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">কোনো student নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

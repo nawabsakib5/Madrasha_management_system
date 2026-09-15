@@ -159,3 +159,9 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 # ─── Session Timeout (30 minutes) ────────────────────────
 SESSION_COOKIE_AGE = 1800
 SESSION_SAVE_EVERY_REQUEST = True
+
+
+# Login URL
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'core:dashboard'
+LOGOUT_REDIRECT_URL = 'accounts:login'

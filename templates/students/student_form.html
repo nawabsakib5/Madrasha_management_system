@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ action }} Student{% endblock %}
+
+{% block content %}
+<div>
+    <h1>{{ action }} Student</h1>
+    <a href="{% url 'students:student_list' %}">Back to List</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div>
+            <label>Student ID</label>
+            <input type="text" name="student_id" value="{{ student.student_id|default:'' }}" required>
+        </div>
+
+        <div>
+            <label>Full Name</label>
+            <input type="text" name="full_name" value="{{ student.full_name|default:'' }}" required>
+        </div>
+
+        <div>
+            <label>Gender</label>
+            <select name="gender" required>
+                <option value="">-- Select --</option>
+                <option value="male" {% if student.gender == 'male' %}selected{% endif %}>Male</option>
+                <option value="female" {% if student.gender == 'female' %}selected{% endif %}>Female</option>
+                <option value="other" {% if student.gender == 'other' %}selected{% endif %}>Other</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Date of Birth</label>
+            <input type="date" name="date_of_birth" value="{{ student.date_of_birth|default:'' }}" required>
+        </div>
+
+        <div>
+            <label>Blood Group</label>
+            <select name="blood_group">
+                <option value="">-- Select --</option>
+                {% for value, label in student.BLOOD_GROUP_CHOICES %}
+                <option value="{{ value }}" {% if student.blood_group == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Phone</label>
+            <input type="text" name="phone" value="{{ student.phone|default:'' }}">
+        </div>
+
+        <div>
+            <label>Email</label>
+            <input type="email" name="email" value="{{ student.email|default:'' }}">
+        </div>
+
+        <div>
+            <label>Address</label>
+            <textarea name="address">{{ student.address|default:'' }}</textarea>
+        </div>
+
+        <div>
+            <label>Roll No</label>
+            <input type="text" name="roll_no" value="{{ student.roll_no|default:'' }}">
+        </div>
+
+        <div>
+            <label>Admission Date</label>
+            <input type="date" name="admission_date" value="{{ student.admission_date|default:'' }}" required>
+        </div>
+
+        <div>
+            <label>Photo</label>
+            <input type="file" name="photo" accept="image/*">
+            {% if student.photo %}
+            <img src="{{ student.photo.url }}" width="100">
+            {% endif %}
+        </div>
+
+        <div>
+            <button type="submit">{{ action }} Student</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

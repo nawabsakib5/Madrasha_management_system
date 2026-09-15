@@ -45,6 +45,9 @@ urlpatterns = [
 
     # Portal
     path('portal/', include('apps.portal.urls')),
+
+    # Authentication
+    path('accounts/', include('apps.accounts.urls')),
 ]
 
 if settings.DEBUG:

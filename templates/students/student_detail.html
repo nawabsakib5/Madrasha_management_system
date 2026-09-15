@@ -1,0 +1,91 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ student.full_name }}{% endblock %}
+
+{% block content %}
+<div>
+    <h1>{{ student.full_name }}</h1>
+    <a href="{% url 'students:student_list' %}">Back to List</a>
+    <a href="{% url 'students:student_edit' student.pk %}">Edit</a>
+    <a href="{% url 'students:student_delete' student.pk %}">Delete</a>
+
+    <h2>Basic Info</h2>
+    <table border="1">
+        <tr>
+            <th>Student ID</th>
+            <td>{{ student.student_id }}</td>
+        </tr>
+        <tr>
+            <th>Full Name</th>
+            <td>{{ student.full_name }}</td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td>{{ student.get_gender_display }}</td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td>{{ student.date_of_birth }}</td>
+        </tr>
+        <tr>
+            <th>Blood Group</th>
+            <td>{{ student.blood_group }}</td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td>{{ student.phone }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ student.email }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ student.address }}</td>
+        </tr>
+        <tr>
+            <th>Roll No</th>
+            <td>{{ student.roll_no }}</td>
+        </tr>
+        <tr>
+            <th>Admission Date</th>
+            <td>{{ student.admission_date }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{% if student.is_active %}Active{% else %}Inactive{% endif %}</td>
+        </tr>
+    </table>
+
+    {% if student.photo %}
+    <h2>Photo</h2>
+    <img src="{{ student.photo.url }}" width="150">
+    {% endif %}
+
+    <h2>Guardians</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Relation</th>
+                <th>Phone</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for guardian in student.guardians.all %}
+            <tr>
+                <td>{{ guardian.full_name }}</td>
+                <td>{{ guardian.get_relation_display }}</td>
+                <td>{{ guardian.phone }}</td>
+                <td>{{ guardian.email }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">কোনো guardian নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
