@@ -4,213 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Madrasha Management System{% endblock %}</title>
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- ============================================================
-         SM DESIGN SYSTEM — School/Madrasha Management
-         This is the ONE place theme tokens + global component
-         overrides live. Every child page inherits this automatically
-         through normal Bootstrap classes (btn, card, table, alert,
-         form-control, badge...). Child pages should NOT redefine
-         these tokens — only add page-specific rules in extra_css.
-    ============================================================= -->
-    <style>
-        :root{
-            --sm-navy:      #0A2640;
-            --sm-navy-700:  #123B5E;
-            --sm-navy-800:  #0D2F4D;
-            --sm-cyan:      #0DCAF0;
-            --sm-cyan-dark: #06A8C9;
-            --sm-green:     #22C55E;
-            --sm-red:       #EF4444;
-            --sm-amber:     #F59E0B;
-            --sm-ink:       #16222E;
-            --sm-muted:     #64798A;
-            --sm-line:      #E4EAEF;
-            --sm-bg:        #F3F6F8;
-            --sm-card:      #FFFFFF;
-            --sm-radius:    14px;
-            --sm-radius-sm: 10px;
-            --sm-shadow:    0 10px 30px -14px rgba(10,38,64,.18), 0 2px 8px rgba(10,38,64,.06);
-            --sm-font: 'Hind Siliguri', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-
-            --bs-body-font-family: var(--sm-font);
-            --bs-border-radius: var(--sm-radius-sm);
-            --bs-border-radius-lg: var(--sm-radius);
-            --bs-border-radius-sm: 8px;
-        }
-
-        html, body{ background: var(--sm-bg); font-family: var(--sm-font); color: var(--sm-ink); }
-        h1,h2,h3,h4,h5,h6{ font-family: var(--sm-font); color: var(--sm-navy); font-weight: 700; letter-spacing: -0.01em; }
-
-        /* ---------------- Navbar ---------------- */
-        .navbar{
-            background: linear-gradient(120deg, var(--sm-navy) 0%, var(--sm-navy-800) 100%) !important;
-            padding: .55rem 0;
-            box-shadow: 0 4px 18px -6px rgba(10,38,64,.35);
-        }
-        .navbar-brand{
-            display: flex; align-items: center; gap: 9px;
-            font-weight: 700; font-size: 1.1rem;
-            color: #fff !important;
-        }
-        .navbar-brand i{
-            width: 32px; height: 32px;
-            display: inline-flex; align-items: center; justify-content: center;
-            background: rgba(13,202,240,.16);
-            color: var(--sm-cyan);
-            border-radius: 9px;
-            font-size: 1rem;
-        }
-        .navbar .nav-link{
-            color: rgba(255,255,255,.78) !important;
-            font-weight: 500;
-            font-size: .925rem;
-            padding: .5rem .85rem !important;
-            border-radius: 8px;
-            display: flex; align-items: center; gap: 6px;
-            transition: color .15s ease, background .15s ease;
-        }
-        .navbar .nav-link:hover,
-        .navbar .nav-link:focus,
-        .navbar .nav-item.show > .nav-link{
-            color: #fff !important;
-            background: rgba(255,255,255,.08);
-        }
-        .navbar .nav-link i{ font-size: .95rem; color: var(--sm-cyan); }
-        .navbar-toggler{ border-color: rgba(255,255,255,.25); }
-        .navbar-toggler:focus{ box-shadow: 0 0 0 .2rem rgba(13,202,240,.35); }
-
-        .dropdown-menu{
-            border: 1px solid var(--sm-line);
-            border-radius: var(--sm-radius-sm);
-            box-shadow: var(--sm-shadow);
-            padding: .4rem;
-            margin-top: .5rem !important;
-        }
-        .dropdown-item{
-            border-radius: 8px;
-            font-size: .9rem;
-            padding: .5rem .7rem;
-            display: flex; align-items: center; gap: 8px;
-            color: var(--sm-ink);
-        }
-        .dropdown-item:hover, .dropdown-item:focus{
-            background: #EEF8FB;
-            color: var(--sm-navy-800);
-        }
-        .dropdown-item.text-danger:hover{ background: #FEF2F2; }
-        .dropdown-item-text{ font-size: .82rem; padding: .35rem .7rem; }
-        .dropdown-divider{ margin: .35rem 0; }
-
-        /* user chip on the right */
-        .navbar .nav-item.dropdown:last-child > .nav-link{
-            background: rgba(255,255,255,.06);
-            border: 1px solid rgba(255,255,255,.10);
-        }
-
-        /* ---------------- Buttons ---------------- */
-        .btn{ font-weight: 600; font-size: .9rem; border-radius: var(--sm-radius-sm); padding: .55rem 1.1rem; transition: transform .12s ease, box-shadow .12s ease, background .15s ease; }
-        .btn:active{ transform: translateY(1px); }
-        .btn-primary{
-            background: linear-gradient(135deg, var(--sm-navy), var(--sm-navy-700));
-            border: none;
-            box-shadow: 0 8px 18px -8px rgba(10,38,64,.55);
-        }
-        .btn-primary:hover, .btn-primary:focus{
-            background: linear-gradient(135deg, var(--sm-navy-700), var(--sm-navy));
-            box-shadow: 0 10px 22px -8px rgba(10,38,64,.6);
-        }
-        .btn-outline-primary{
-            color: var(--sm-navy); border-color: var(--sm-line); background: #fff;
-        }
-        .btn-outline-primary:hover{
-            background: var(--sm-navy); border-color: var(--sm-navy); color: #fff;
-        }
-        .btn-danger{ background: var(--sm-red); border: none; }
-        .btn-success{ background: var(--sm-green); border: none; }
-        .btn-sm{ border-radius: 8px; }
-
-        /* ---------------- Cards ---------------- */
-        .card{
-            border: 1px solid var(--sm-line);
-            border-radius: var(--sm-radius);
-            box-shadow: var(--sm-shadow);
-        }
-        .card-header{
-            background: #fff;
-            border-bottom: 1px solid var(--sm-line);
-            font-weight: 700;
-            color: var(--sm-navy);
-            border-radius: var(--sm-radius) var(--sm-radius) 0 0 !important;
-        }
-
-        /* ---------------- Alerts / messages ---------------- */
-        .alert{
-            border: 1px solid transparent;
-            border-radius: var(--sm-radius-sm);
-            border-left-width: 4px;
-            font-size: .9rem;
-            box-shadow: var(--sm-shadow);
-        }
-        .alert-success{ background:#ECFDF5; color:#166534; border-color:#BBF0D3; border-left-color: var(--sm-green); }
-        .alert-danger{ background:#FEF2F2; color:#B91C1C; border-color:#FBD5D5; border-left-color: var(--sm-red); }
-        .alert-warning{ background:#FFFBEB; color:#92400E; border-color:#FDE6B2; border-left-color: var(--sm-amber); }
-        .alert-info{ background:#EFF8FE; color:#0B6E8A; border-color:#C9ECF8; border-left-color: var(--sm-cyan); }
-
-        /* ---------------- Forms ---------------- */
-        .form-control, .form-select{
-            border: 1.5px solid var(--sm-line);
-            border-radius: var(--sm-radius-sm);
-            font-size: .9rem;
-            padding: .55rem .8rem;
-        }
-        .form-control:focus, .form-select:focus{
-            border-color: var(--sm-cyan);
-            box-shadow: 0 0 0 4px rgba(13,202,240,.14);
-        }
-        .form-label{ font-weight: 600; font-size: .85rem; color: var(--sm-navy); }
-
-        /* ---------------- Tables ---------------- */
-        .table{ --bs-table-bg: transparent; }
-        .table thead th{
-            font-size: .78rem;
-            text-transform: none;
-            color: var(--sm-muted);
-            font-weight: 700;
-            border-bottom: 2px solid var(--sm-line);
-            background: #F8FAFC;
-        }
-        .table td{ font-size: .875rem; vertical-align: middle; color: var(--sm-ink); }
-        .table-hover tbody tr:hover{ background: #F5FBFD; }
-
-        /* ---------------- Badges ---------------- */
-        .badge{ font-weight: 600; font-size: .72rem; padding: .4em .65em; border-radius: 7px; }
-        .badge.bg-success{ background: var(--sm-green) !important; }
-        .badge.bg-danger{ background: var(--sm-red) !important; }
-        .badge.bg-warning{ background: var(--sm-amber) !important; color: #fff !important; }
-        .badge.bg-primary{ background: var(--sm-navy) !important; }
-        .badge.bg-info{ background: var(--sm-cyan) !important; color: var(--sm-navy) !important; }
-
-        main.container-fluid{ max-width: 1320px; opacity: 0; }
-    </style>
-
     {% block extra_css %}{% endblock %}
 </head>
 <body>
 
 {% if user.is_authenticated %}
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark" id="smNavbar">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'core:dashboard' %}">
             <i class="bi bi-building"></i> MMS
@@ -232,9 +33,8 @@
                         <i class="bi bi-people"></i> Students
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-list-ul"></i> Student List</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> Add Student</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-people"></i> Guardians</a></li>
+                        <li><a class="dropdown-item" href="{% url 'students:student_list' %}">Student List</a></li>
+                        <li><a class="dropdown-item" href="{% url 'students:student_add' %}">Add Student</a></li>
                     </ul>
                 </li>
 
@@ -243,9 +43,9 @@
                         <i class="bi bi-cash-stack"></i> Accounting
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-cash-coin"></i> Fee Collection</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-journal-text"></i> Cash Book</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-wallet2"></i> Salary</a></li>
+                        <li><a class="dropdown-item" href="#">Fee Collection</a></li>
+                        <li><a class="dropdown-item" href="#">Cash Book</a></li>
+                        <li><a class="dropdown-item" href="#">Salary</a></li>
                     </ul>
                 </li>
 
@@ -254,8 +54,38 @@
                         <i class="bi bi-person-badge"></i> Staff
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-list-ul"></i> Staff List</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-x"></i> Leave Management</a></li>
+                        <li><a class="dropdown-item" href="#">Staff List</a></li>
+                        <li><a class="dropdown-item" href="#">Leave Management</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-book"></i> Library
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Book List</a></li>
+                        <li><a class="dropdown-item" href="#">Book Issue</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-heart"></i> Donation
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Donors</a></li>
+                        <li><a class="dropdown-item" href="#">Donations</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-cup-hot"></i> Canteen
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Items</a></li>
+                        <li><a class="dropdown-item" href="#">Sales</a></li>
                     </ul>
                 </li>
                 {% endif %}
@@ -266,8 +96,8 @@
                         <i class="bi bi-calendar-check"></i> Attendance
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-mortarboard"></i> Student Attendance</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person-workspace"></i> Staff Attendance</a></li>
+                        <li><a class="dropdown-item" href="#">Student Attendance</a></li>
+                        <li><a class="dropdown-item" href="#">Staff Attendance</a></li>
                     </ul>
                 </li>
 
@@ -276,14 +106,13 @@
                         <i class="bi bi-file-earmark-text"></i> Examination
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-pencil-square"></i> Exams</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-graph-up"></i> Results</a></li>
+                        <li><a class="dropdown-item" href="#">Exams</a></li>
+                        <li><a class="dropdown-item" href="#">Results</a></li>
                     </ul>
                 </li>
                 {% endif %}
             </ul>
 
-            <!-- Right side -->
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -306,9 +135,8 @@
 </nav>
 {% endif %}
 
-<!-- Messages -->
 {% if messages %}
-<div class="container mt-3" id="smMessages">
+<div class="container mt-2">
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
         {{ message }}
@@ -318,82 +146,11 @@
 </div>
 {% endif %}
 
-<!-- Main Content -->
-<main class="container-fluid mt-3" id="smMain">
+<main class="container-fluid mt-3">
     {% block content %}{% endblock %}
 </main>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- GSAP (loaded once, globally — child pages should NOT re-include this) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
-<!-- ============================================================
-     SM shared animation toolkit.
-     Every child page calls these instead of writing raw GSAP,
-     so motion stays consistent site-wide. Available as `window.SM`.
-============================================================= -->
-<script>
-window.SM = (function(){
-    var has = typeof gsap !== 'undefined';
-
-    function onReady(fn){
-        if (document.readyState !== 'loading') fn();
-        else document.addEventListener('DOMContentLoaded', fn);
-    }
-
-    /** Fade + slide up a group of elements with stagger. */
-    function reveal(selector, opts){
-        opts = opts || {};
-        var els = typeof selector === 'string' ? document.querySelectorAll(selector) : selector;
-        if (!els || !els.length){ return; }
-        if (!has){ els.forEach(function(el){ el.style.opacity = 1; }); return; }
-        gsap.fromTo(els,
-            { opacity: 0, y: opts.y != null ? opts.y : 16 },
-            { opacity: 1, y: 0, duration: opts.duration || .45,
-              stagger: opts.stagger != null ? opts.stagger : .06,
-              delay: opts.delay || 0, ease: opts.ease || 'power3.out' }
-        );
-    }
-
-    /** Animate a numeric counter from 0 (or current) to a target value. */
-    function countUp(el, endVal, opts){
-        opts = opts || {};
-        el = typeof el === 'string' ? document.querySelector(el) : el;
-        if (!el) return;
-        var obj = { val: 0 };
-        var decimals = opts.decimals || 0;
-        var prefix = opts.prefix || '';
-        var suffix = opts.suffix || '';
-        if (!has){ el.textContent = prefix + endVal.toFixed(decimals) + suffix; return; }
-        gsap.to(obj, {
-            val: endVal, duration: opts.duration || 1.1, ease: 'power2.out',
-            delay: opts.delay || 0,
-            onUpdate: function(){ el.textContent = prefix + obj.val.toFixed(decimals) + suffix; }
-        });
-    }
-
-    /** One-time page entrance: navbar drops in, messages stagger, main content fades up. */
-    function pageEntrance(){
-        if (!has){
-            var main = document.getElementById('smMain');
-            if (main) main.style.opacity = 1;
-            return;
-        }
-        var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        tl.fromTo('#smNavbar', { y: -14, opacity: 0 }, { y: 0, opacity: 1, duration: .4 }, 0)
-          .to('#smMain', { opacity: 1, duration: .01 }, .05)
-          .fromTo('#smMessages .alert', { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: .35, stagger: .08 }, .1)
-          .fromTo('#smMain > *', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .45, stagger: .07 }, .15);
-    }
-
-    onReady(pageEntrance);
-
-    return { reveal: reveal, countUp: countUp, onReady: onReady, has: has };
-})();
-</script>
-
 {% block extra_js %}{% endblock %}
 
 </body>

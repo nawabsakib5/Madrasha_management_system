@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Delete Student{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Delete Student</h1>
+    
+    <p>আপনি কি সত্যিই <strong>{{ student.full_name }}</strong> (ID: {{ student.student_id }}) কে নিষ্ক্রিয় করতে চান?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">হ্যাঁ, নিষ্ক্রিয় করুন</button>
+        <a href="{% url 'students:student_detail' student.pk %}">না, ফিরে যান</a>
+    </form>
+</div>
+{% endblock %}
