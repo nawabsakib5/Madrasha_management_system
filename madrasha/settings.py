@@ -157,7 +157,7 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 # ─── Session Timeout (30 minutes) ────────────────────────
-SESSION_COOKIE_AGE = 1800
+SESSION_COOKIE_AGE = 600  # 10 minutes
 SESSION_SAVE_EVERY_REQUEST = True
 
 

@@ -1,0 +1,97 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ action }} Staff{% endblock %}
+
+{% block content %}
+<div>
+    <h1>{{ action }} Staff</h1>
+    <a href="{% url 'staff:staff_list' %}">Back to List</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div>
+            <label>Staff ID</label>
+            <input type="text" name="staff_id" value="{{ staff.staff_id|default:'' }}" required>
+        </div>
+
+        <div>
+            <label>Full Name</label>
+            <input type="text" name="full_name" value="{{ staff.full_name|default:'' }}" required>
+        </div>
+
+        <div>
+            <label>Staff Type</label>
+            <select name="staff_type" required>
+                <option value="">-- Select --</option>
+                {% for value, label in staff_type_choices %}
+                <option value="{{ value }}" {% if staff.staff_type == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Gender</label>
+            <select name="gender" required>
+                <option value="">-- Select --</option>
+                {% for value, label in gender_choices %}
+                <option value="{{ value }}" {% if staff.gender == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Blood Group</label>
+            <select name="blood_group">
+                <option value="">-- Select --</option>
+                {% for value, label in blood_group_choices %}
+                <option value="{{ value }}" {% if staff.blood_group == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Phone</label>
+            <input type="text" name="phone" value="{{ staff.phone|default:'' }}" required>
+        </div>
+
+        <div>
+            <label>Email</label>
+            <input type="email" name="email" value="{{ staff.email|default:'' }}">
+        </div>
+
+        <div>
+            <label>Address</label>
+            <textarea name="address">{{ staff.address|default:'' }}</textarea>
+        </div>
+
+        <div>
+            <label>Designation</label>
+            <input type="text" name="designation" value="{{ staff.designation|default:'' }}">
+        </div>
+
+        <div>
+            <label>Joining Date</label>
+            <input type="date" name="joining_date" value="{{ staff.joining_date|default:'' }}" required>
+        </div>
+
+        <div>
+            <label>Photo</label>
+            <input type="file" name="photo" accept="image/*">
+            {% if staff.photo %}
+            <img src="{{ staff.photo.url }}" width="100">
+            {% endif %}
+        </div>
+
+        <div>
+            <button type="submit">{{ action }} Staff</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
