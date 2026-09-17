@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Leave List{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Leave Applications</h1>
+    <a href="{% url 'staff:leave_apply' %}">Apply for Leave</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Staff</th>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leave in leaves %}
+            <tr>
+                <td>{{ leave.staff.full_name }}</td>
+                <td>{{ leave.leave_type.name }}</td>
+                <td>{{ leave.start_date }}</td>
+                <td>{{ leave.end_date }}</td>
+                <td>{{ leave.reason }}</td>
+                <td>{{ leave.get_status_display }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">কোনো leave application নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
