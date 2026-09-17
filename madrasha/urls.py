@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Authentication
-    path('auth/', include('apps.accounts.urls')),
+    path('accounts/', include('apps.accounts.urls')),
 
     # Core/Dashboard
     path('', include('apps.core.urls')),
@@ -45,9 +45,6 @@ urlpatterns = [
 
     # Portal
     path('portal/', include('apps.portal.urls')),
-
-    # Authentication
-    path('accounts/', include('apps.accounts.urls')),
 ]
 
 if settings.DEBUG:

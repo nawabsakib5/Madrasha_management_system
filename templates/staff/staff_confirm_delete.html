@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Delete Staff{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Delete Staff</h1>
+
+    <p>আপনি কি সত্যিই <strong>{{ staff.full_name }}</strong> (ID: {{ staff.staff_id }}) কে নিষ্ক্রিয় করতে চান?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">হ্যাঁ, নিষ্ক্রিয় করুন</button>
+        <a href="{% url 'staff:staff_detail' staff.pk %}">না, ফিরে যান</a>
+    </form>
+</div>
+{% endblock %}

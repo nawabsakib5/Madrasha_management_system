@@ -2,163 +2,33 @@
 
 {% block title %}Login{% endblock %}
 
-{% block extra_css %}
-<style>
-    body{ overflow-x: hidden; }
-
-    /* Full-bleed split hero — breaks out of the container-fluid padding */
-    .sm-login-wrap{
-        position: relative;
-        left: 50%; right: 50%;
-        margin-left: -50vw; margin-right: -50vw;
-        width: 100vw;
-        min-height: calc(100vh - 76px);
-    }
-    .sm-login-grid{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        min-height: calc(100vh - 76px);
-    }
-    @media (max-width: 900px){
-        .sm-login-grid{ grid-template-columns: 1fr; }
-        .sm-login-brand{ min-height: 200px; padding: 32px 20px !important; }
-    }
-
-    .sm-login-brand{
-        position: relative;
-        overflow: hidden;
-        display: flex; align-items: center; justify-content: center;
-        padding: 40px;
-        background: linear-gradient(160deg, var(--sm-navy) 0%, var(--sm-navy-800) 55%, var(--sm-navy-700) 100%);
-    }
-    .sm-login-pattern{
-        position: absolute; inset: 0; z-index: 1; opacity: .09;
-        background-image:
-            linear-gradient(45deg, #fff 1px, transparent 1px),
-            linear-gradient(-45deg, #fff 1px, transparent 1px);
-        background-size: 46px 46px;
-    }
-    .sm-login-brand-inner{ position: relative; z-index: 2; max-width: 380px; text-align: center; color: #fff; }
-    .sm-login-badge{
-        width: 64px; height: 64px; border-radius: 16px;
-        background: rgba(13,202,240,.16);
-        display: flex; align-items: center; justify-content: center;
-        margin: 0 auto 22px; font-size: 1.8rem; color: var(--sm-cyan);
-    }
-    .sm-login-brand-inner h2{ color: #fff; font-size: 1.45rem; margin-bottom: 10px; }
-    .sm-login-brand-inner p{ color: rgba(255,255,255,.72); font-size: .92rem; margin: 0; line-height: 1.6; }
-
-    .sm-login-form-side{ display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
-    .sm-login-card{ width: 100%; max-width: 380px; opacity: 0; }
-    .sm-login-card h1{ font-size: 1.6rem; margin-bottom: 4px; }
-    .sm-login-sub{ color: var(--sm-muted); font-size: .88rem; margin-bottom: 26px; }
-
-    .sm-login-card .input-group-text{
-        background: #F8FAFC;
-        border-color: var(--sm-line);
-        color: var(--sm-muted);
-    }
-    .sm-login-card .input-group:focus-within .form-control,
-    .sm-login-card .input-group:focus-within .input-group-text{
-        border-color: var(--sm-cyan);
-    }
-    .sm-login-card .input-group:focus-within .input-group-text{
-        box-shadow: -4px 0 0 0 rgba(13,202,240,.14);
-    }
-</style>
-{% endblock %}
-
 {% block content %}
+<div>
+    <h1>Login</h1>
+    <p>আপনার অ্যাকাউন্টে প্রবেশ করুন</p>
 
-<div class="sm-login-wrap" id="smLoginWrap">
-    <div class="sm-login-grid">
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
-        <div class="sm-login-brand">
-            <div class="sm-login-pattern"></div>
-            <div class="sm-login-brand-inner">
-                <div class="sm-login-badge"><i class="bi bi-building"></i></div>
-                <h2>Madrasha Management System</h2>
-                <p>শিক্ষার্থী, শিক্ষক, স্টাফ ও অভিভাবক — প্রতিষ্ঠানের সব কার্যক্রম এক জায়গায়।</p>
-            </div>
+    <form method="POST" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autofocus>
         </div>
 
-        <div class="sm-login-form-side">
-            <div class="sm-login-card" id="smLoginCard">
-                <h1>Login</h1>
-                <p class="sm-login-sub">আপনার অ্যাকাউন্টে প্রবেশ করুন</p>
-
-                {% if messages %}
-                <div class="mb-3">
-                    {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} py-2 mb-2">{{ message }}</div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                <form method="POST" action="{% url 'accounts:login' %}" id="smLoginForm">
-                    {% csrf_token %}
-
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-person"></i></span>
-                            <input type="text" class="form-control" id="username" name="username" required autofocus>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="password" class="form-label">Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                            <button class="btn btn-outline-secondary" type="button" id="smPwToggle" tabindex="-1">
-                                <i class="bi bi-eye" id="smPwToggleIcon"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" id="smLoginBtn">
-                        <span class="spinner-border spinner-border-sm d-none" id="smLoginSpinner"></span>
-                        <span>Login</span>
-                    </button>
-                </form>
-            </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
         </div>
 
-    </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
 </div>
-
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    SM.onReady(function(){
-
-        /* Bespoke hero entrance — brand panel slides in, card choreographs after */
-        if (SM.has){
-            gsap.timeline({ defaults: { ease: 'power3.out' } })
-                .fromTo('.sm-login-brand', { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: .55 }, 0)
-                .fromTo('.sm-login-badge', { opacity: 0, scale: .5 }, { opacity: 1, scale: 1, duration: .45, ease: 'back.out(2)' }, .18)
-                .to('#smLoginCard', { opacity: 1, duration: .01 }, .15)
-                .fromTo('#smLoginCard > *', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .4, stagger: .07 }, .22);
-        } else {
-            document.getElementById('smLoginCard').style.opacity = 1;
-        }
-
-        /* Password visibility toggle */
-        document.getElementById('smPwToggle').addEventListener('click', function(){
-            var input = document.getElementById('password');
-            var icon = document.getElementById('smPwToggleIcon');
-            var show = input.type === 'password';
-            input.type = show ? 'text' : 'password';
-            icon.className = show ? 'bi bi-eye-slash' : 'bi bi-eye';
-        });
-
-        /* Submit loading state */
-        document.getElementById('smLoginForm').addEventListener('submit', function(){
-            document.getElementById('smLoginSpinner').classList.remove('d-none');
-            document.getElementById('smLoginBtn').disabled = true;
-        });
-    });
-</script>
 {% endblock %}
