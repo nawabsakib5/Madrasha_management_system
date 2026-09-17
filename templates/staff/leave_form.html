@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Apply Leave{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Apply for Leave</h1>
+    <a href="{% url 'staff:leave_list' %}">Back to List</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div>
+            <label>Leave Type</label>
+            <select name="leave_type" required>
+                <option value="">-- Select --</option>
+                {% for leave_type in leave_types %}
+                <option value="{{ leave_type.pk }}">{{ leave_type.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Start Date</label>
+            <input type="date" name="start_date" required>
+        </div>
+
+        <div>
+            <label>End Date</label>
+            <input type="date" name="end_date" required>
+        </div>
+
+        <div>
+            <label>Reason</label>
+            <textarea name="reason" required></textarea>
+        </div>
+
+        <div>
+            <button type="submit">Submit Application</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
