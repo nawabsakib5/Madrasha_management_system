@@ -54,8 +54,9 @@
                         <i class="bi bi-person-badge"></i> Staff
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Staff List</a></li>
-                        <li><a class="dropdown-item" href="#">Leave Management</a></li>
+                        <li><a class="dropdown-item" href="{% url 'staff:staff_list' %}">Staff List</a></li>
+                        <li><a class="dropdown-item" href="{% url 'staff:staff_add' %}">Add Staff</a></li>
+                        <li><a class="dropdown-item" href="{% url 'staff:leave_list' %}">Leave Management</a></li>
                     </ul>
                 </li>
 
