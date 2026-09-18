@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Cash Book{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Cash Book</h1>
+    <a href="{% url 'accounting:cashbook_add' %}">Add Entry</a>
+
+    <table border="1">
+        <tr>
+            <th>Total Income</th>
+            <td>৳{{ total_income }}</td>
+            <th>Total Expense</th>
+            <td>৳{{ total_expense }}</td>
+            <th>Balance</th>
+            <td>৳{{ balance }}</td>
+        </tr>
+    </table>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Reference</th>
+                <th>Recorded By</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+            <tr>
+                <td>{{ entry.date }}</td>
+                <td>{{ entry.get_type_display }}</td>
+                <td>{{ entry.category }}</td>
+                <td>৳{{ entry.amount }}</td>
+                <td>{{ entry.description }}</td>
+                <td>{{ entry.reference }}</td>
+                <td>{{ entry.recorded_by.full_name }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">কোনো entry নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
