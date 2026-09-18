@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ action }} Cash Book Entry{% endblock %}
+
+{% block content %}
+<div>
+    <h1>{{ action }} Cash Book Entry</h1>
+    <a href="{% url 'accounting:cashbook_list' %}">Back to List</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div>
+            <label>Date</label>
+            <input type="date" name="date" required>
+        </div>
+
+        <div>
+            <label>Type</label>
+            <select name="type" required>
+                <option value="">-- Select --</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Category</label>
+            <input type="text" name="category" required>
+        </div>
+
+        <div>
+            <label>Amount (৳)</label>
+            <input type="number" name="amount" step="0.01" required>
+        </div>
+
+        <div>
+            <label>Description</label>
+            <textarea name="description"></textarea>
+        </div>
+
+        <div>
+            <label>Reference</label>
+            <input type="text" name="reference">
+        </div>
+
+        <div>
+            <button type="submit">{{ action }} Entry</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
