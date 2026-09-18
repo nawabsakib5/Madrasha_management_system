@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Add Result{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Add Result — {{ exam.name }}</h1>
+    <a href="{% url 'examination:exam_list' %}">Back to Exam List</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h2>Exam Info</h2>
+    <table border="1">
+        <tr>
+            <th>Exam</th>
+            <td>{{ exam.name }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ exam.get_exam_type_display }}</td>
+        </tr>
+        <tr>
+            <th>Class</th>
+            <td>{{ exam.school_class.name }}</td>
+        </tr>
+    </table>
+
+    <h2>Enter Result</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div>
+            <label>Student</label>
+            <select name="student" required>
+                <option value="">-- Select Student --</option>
+                {% for student in students %}
+                <option value="{{ student.pk }}">{{ student.student_id }} - {{ student.full_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Subject</label>
+            <select name="subject" required>
+                <option value="">-- Select Subject --</option>
+                {% for subject in subjects %}
+                <option value="{{ subject.pk }}">{{ subject.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Marks Obtained</label>
+            <input type="number" name="marks_obtained" step="0.01" min="0" max="100">
+        </div>
+
+        <div>
+            <label>
+                <input type="checkbox" name="is_absent"> Absent
+            </label>
+        </div>
+
+        <div>
+            <button type="submit">Save Result</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
