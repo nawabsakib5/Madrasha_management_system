@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ action }} Exam{% endblock %}
+
+{% block content %}
+<div>
+    <h1>{{ action }} Exam</h1>
+    <a href="{% url 'examination:exam_list' %}">Back to List</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div>
+            <label>Exam Name</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <div>
+            <label>Exam Type</label>
+            <select name="exam_type" required>
+                <option value="">-- Select --</option>
+                {% for value, label in exam_type_choices %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Class</label>
+            <select name="school_class" required>
+                <option value="">-- Select Class --</option>
+                {% for class in classes %}
+                <option value="{{ class.pk }}">{{ class.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Start Date</label>
+            <input type="date" name="start_date" required>
+        </div>
+
+        <div>
+            <label>End Date</label>
+            <input type="date" name="end_date" required>
+        </div>
+
+        <div>
+            <button type="submit">{{ action }} Exam</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
