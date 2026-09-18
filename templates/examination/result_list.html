@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Exam Results{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Exam Results</h1>
+    <a href="{% url 'examination:exam_list' %}">Exams</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Exam</th>
+                <th>Student</th>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Grade</th>
+                <th>Absent</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                <td>{{ result.exam.name }}</td>
+                <td>{{ result.student.full_name }}</td>
+                <td>{{ result.subject.name }}</td>
+                <td>{{ result.marks_obtained }}</td>
+                <td>{{ result.grade }}</td>
+                <td>{% if result.is_absent %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">কোনো result নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
