@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Import Staff Attendance{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Access Control থেকে Attendance Import</h1>
+    <a href="{% url 'attendance:staff_attendance_list' %}">Back to List</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h2>CSV File Format</h2>
+    <p>CSV file-এ এই columns থাকতে হবে:</p>
+    <table border="1">
+        <tr>
+            <th>staff_id</th>
+            <th>status</th>
+            <th>check_in</th>
+            <th>check_out</th>
+        </tr>
+        <tr>
+            <td>STF001</td>
+            <td>present</td>
+            <td>08:30</td>
+            <td>17:00</td>
+        </tr>
+    </table>
+
+    <h2>Import</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div>
+            <label>Date</label>
+            <input type="date" name="date" required>
+        </div>
+
+        <div>
+            <label>CSV File (Access Control Export)</label>
+            <input type="file" name="attendance_file" accept=".csv" required>
+        </div>
+
+        <div>
+            <button type="submit">Import Attendance</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
