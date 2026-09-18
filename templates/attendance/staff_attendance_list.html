@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Staff Attendance{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Staff Attendance</h1>
+
+    <form method="GET">
+        <label>Date</label>
+        <input type="date" name="date" value="{{ date }}">
+        <button type="submit">Filter</button>
+    </form>
+
+    <a href="{% url 'attendance:staff_attendance_mark' %}">Manual Input</a>
+    <a href="{% url 'attendance:staff_attendance_import' %}">Access Control Import</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Staff ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendances %}
+            <tr>
+                <td>{{ attendance.staff.staff_id }}</td>
+                <td>{{ attendance.staff.full_name }}</td>
+                <td>{{ attendance.date }}</td>
+                <td>{{ attendance.get_status_display }}</td>
+                <td>{{ attendance.check_in|default:'-' }}</td>
+                <td>{{ attendance.check_out|default:'-' }}</td>
+                <td>{{ attendance.note }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">এই তারিখে কোনো attendance নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
