@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Mark Staff Attendance{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Staff Attendance — Manual Input</h1>
+    <p>তারিখ: {{ today }}</p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div>
+            <label>Date</label>
+            <input type="date" name="date" value="{{ today }}" required>
+        </div>
+
+        <input type="hidden" name="source" value="manual">
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for staff in staffs %}
+                <tr>
+                    <td>{{ staff.staff_id }}</td>
+                    <td>{{ staff.full_name }}</td>
+                    <td>
+                        <select name="status_{{ staff.pk }}">
+                            {% for value, label in status_choices %}
+                            <option value="{{ value }}"
+                                {% if value == 'present' %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="time" name="check_in_{{ staff.pk }}">
+                    </td>
+                    <td>
+                        <input type="time" name="check_out_{{ staff.pk }}">
+                    </td>
+                    <td>
+                        <input type="text" name="note_{{ staff.pk }}">
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">কোনো staff নেই</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div>
+            <button type="submit">Save Attendance</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
