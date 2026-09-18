@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Student Attendance{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Student Attendance</h1>
+
+    <form method="GET">
+        <label>Date</label>
+        <input type="date" name="date" value="{{ date }}">
+        <button type="submit">Filter</button>
+    </form>
+
+    <a href="{% url 'attendance:student_attendance_mark' %}">Mark Today's Attendance</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendances %}
+            <tr>
+                <td>{{ attendance.student.student_id }}</td>
+                <td>{{ attendance.student.full_name }}</td>
+                <td>{{ attendance.date }}</td>
+                <td>{{ attendance.get_status_display }}</td>
+                <td>{{ attendance.note }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">এই তারিখে কোনো attendance নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
