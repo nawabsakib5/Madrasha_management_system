@@ -43,9 +43,9 @@
                         <i class="bi bi-cash-stack"></i> Accounting
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Fee Collection</a></li>
-                        <li><a class="dropdown-item" href="#">Cash Book</a></li>
-                        <li><a class="dropdown-item" href="#">Salary</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounting:fee_invoice_list' %}">Fee Collection</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounting:cashbook_list' %}">Cash Book</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounting:fee_category_list' %}">Fee Categories</a></li>
                     </ul>
                 </li>
 
