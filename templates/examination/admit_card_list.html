@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Admit Cards{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Admit Cards</h1>
+    <a href="{% url 'examination:exam_list' %}">Back to Exams</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Exam</th>
+                <th>Student</th>
+                <th>Roll No</th>
+                <th>Issued</th>
+                <th>Issued At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in admit_cards %}
+            <tr>
+                <td>{{ card.exam.name }}</td>
+                <td>{{ card.student.full_name }}</td>
+                <td>{{ card.roll_no }}</td>
+                <td>{% if card.is_issued %}Yes{% else %}No{% endif %}</td>
+                <td>{{ card.issued_at|default:'-' }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">কোনো admit card নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
