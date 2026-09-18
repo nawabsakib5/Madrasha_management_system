@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Generate Admit Cards{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Generate Admit Cards</h1>
+    <a href="{% url 'examination:exam_list' %}">Back to Exam List</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h2>Exam: {{ exam.name }}</h2>
+    <table border="1">
+        <tr>
+            <th>Class</th>
+            <td>{{ exam.school_class.name }}</td>
+        </tr>
+        <tr>
+            <th>Start Date</th>
+            <td>{{ exam.start_date }}</td>
+        </tr>
+        <tr>
+            <th>Total Students</th>
+            <td>{{ students.count }}</td>
+        </tr>
+    </table>
+
+    <p>এই exam-এর জন্য {{ students.count }} জন student-এর admit card তৈরি হবে।</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Generate Admit Cards</button>
+        <a href="{% url 'examination:exam_list' %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}
