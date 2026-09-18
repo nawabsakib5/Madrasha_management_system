@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Collect Payment{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Collect Payment</h1>
+    <a href="{% url 'accounting:fee_invoice_list' %}">Back to Invoice List</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h2>Invoice Details</h2>
+    <table border="1">
+        <tr>
+            <th>Student</th>
+            <td>{{ invoice.student.full_name }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ invoice.category.name }}</td>
+        </tr>
+        <tr>
+            <th>Total Amount</th>
+            <td>৳{{ invoice.amount }}</td>
+        </tr>
+        <tr>
+            <th>Due Date</th>
+            <td>{{ invoice.due_date }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ invoice.get_status_display }}</td>
+        </tr>
+    </table>
+
+    <h2>Payment</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div>
+            <label>Amount Paid (৳)</label>
+            <input type="number" name="amount_paid" step="0.01" max="{{ invoice.amount }}" required>
+        </div>
+
+        <div>
+            <label>Payment Method</label>
+            <select name="method" required>
+                <option value="">-- Select --</option>
+                {% for value, label in method_choices %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <button type="submit">Collect Payment</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

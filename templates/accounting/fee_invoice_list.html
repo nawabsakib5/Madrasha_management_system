@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Fee Invoices{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Fee Invoices</h1>
+    <a href="{% url 'accounting:fee_invoice_add' %}">Add New Invoice</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Month/Year</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invoice in invoices %}
+            <tr>
+                <td>{{ invoice.student.full_name }}</td>
+                <td>{{ invoice.category.name }}</td>
+                <td>৳{{ invoice.amount }}</td>
+                <td>{{ invoice.due_date }}</td>
+                <td>{{ invoice.month|default:'-' }}/{{ invoice.year|default:'-' }}</td>
+                <td>{{ invoice.get_status_display }}</td>
+                <td>
+                    <a href="{% url 'accounting:fee_payment_add' invoice.pk %}">Collect Payment</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">কোনো invoice নেই</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
